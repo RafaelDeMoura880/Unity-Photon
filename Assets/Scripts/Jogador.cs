@@ -12,9 +12,15 @@ public class Jogador : MonoBehaviourPun
     float inputH;
     float inputV;
 
+    SkinnedMeshRenderer playerColor;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerColor = this.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+
+        if (photonView.IsMine)
+            playerColor.material.color = Color.blue;
     }
 
     private void Update()
