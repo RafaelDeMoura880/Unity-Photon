@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class Jogador : MonoBehaviour
+public class Jogador : MonoBehaviourPun
 {
     public float Velocidade = 7;
     public float VelocidadeGiro = 3;
@@ -18,12 +19,18 @@ public class Jogador : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
+        
         inputH = Input.GetAxis("Horizontal");
         inputV = Input.GetAxis("Vertical");
     }
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine)
+            return;
+        
         //caminhada
         Vector3 novaVelocidade = transform.forward * inputV * Velocidade;
         //manter a velocidade em y (para não afetar gravidade)
