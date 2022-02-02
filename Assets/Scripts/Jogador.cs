@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class Jogador : MonoBehaviourPun
+public class Jogador : MonoBehaviourPun, IPunObservable
 {
     public float Velocidade = 7;
     public float VelocidadeGiro = 3;
@@ -12,8 +12,15 @@ public class Jogador : MonoBehaviourPun
     float inputH;
     float inputV;
 
+    public int Pontuacao;
+
     SkinnedMeshRenderer playerColor;
 
+    void Awake()
+    {
+        Pontuacao = 0;
+    }
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -45,5 +52,36 @@ public class Jogador : MonoBehaviourPun
 
         //giro
         rb.angularVelocity = new Vector3(0, inputH * VelocidadeGiro, 0);
+    }
+
+    [PunRPC]
+    void RPCPontua()
+    {
+        //isto vai executar a partir de uma chamada
+        //remota, do Master para o cliente
+        Pontuacao++;
+    }
+
+    public void Pontua()
+    {
+        //isto vai iniciar a chamada remota (Pontua() será invocado pelo Master)
+        photonView.RPC("RPCPontua", RpcTarget.All);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //stream é o fluxo de dados na comunicação do Photon
+        if (stream.IsWriting)
+        {
+            //está em ooperação de escrita de dados para a rede?
+            //então vamos mandar a informação de Pontuacao nesse fluxo
+            stream.SendNext(Pontuacao);
+        }
+        else
+        {
+            //senão, está em operação de leitura de dados da rede
+            //vamos capturar a informação de Pontuacao nesse fluxo
+            Pontuacao = (int)stream.ReceiveNext();
+        }
     }
 }

@@ -482,6 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Velocidade: 7
   VelocidadeGiro: 3
+  Pontuacao: 0
 --- !u!114 &3556443993455255065
 MonoBehaviour:
   m_ObjectHideFlags: 0

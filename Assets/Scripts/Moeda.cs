@@ -9,6 +9,8 @@ public class Moeda : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient && other.CompareTag("Player"))
         {
+            Jogador jog = other.GetComponent<Jogador>();
+            jog.Pontua();
             PhotonNetwork.Destroy(gameObject);
         }
     }
