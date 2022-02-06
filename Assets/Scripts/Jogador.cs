@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Jogador : MonoBehaviourPun, IPunObservable
 {
-    public float Velocidade = 7;
+    public float Velocidade;
     public float VelocidadeGiro = 3;
 
     Rigidbody rb;
@@ -19,6 +19,7 @@ public class Jogador : MonoBehaviourPun, IPunObservable
     void Awake()
     {
         Pontuacao = 0;
+        Velocidade = 7;
     }
     
     private void Start()
@@ -62,6 +63,17 @@ public class Jogador : MonoBehaviourPun, IPunObservable
         Pontuacao++;
     }
 
+    [PunRPC]
+    void RPCSpeedUp()
+    {
+        Velocidade += 2;
+    }
+
+    public void SpeedUp()
+    {
+        photonView.RPC("RPCSpeedUp", RpcTarget.All);
+    }
+
     public void Pontua()
     {
         //isto vai iniciar a chamada remota (Pontua() será invocado pelo Master)
@@ -76,12 +88,14 @@ public class Jogador : MonoBehaviourPun, IPunObservable
             //está em ooperação de escrita de dados para a rede?
             //então vamos mandar a informação de Pontuacao nesse fluxo
             stream.SendNext(Pontuacao);
+            stream.SendNext(Velocidade);
         }
         else
         {
             //senão, está em operação de leitura de dados da rede
             //vamos capturar a informação de Pontuacao nesse fluxo
             Pontuacao = (int)stream.ReceiveNext();
+            Velocidade = (int)stream.ReceiveNext();
         }
     }
 }
