@@ -31,6 +31,15 @@ public class Jogador : MonoBehaviourPun, IPunObservable
             playerColor.material.color = Color.blue;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        if (other.CompareTag("Explosao"))
+            photonView.RPC("RPCPontua", RpcTarget.All, -1);
+    }
+
     private void Update()
     {
         if (!photonView.IsMine)
@@ -56,7 +65,7 @@ public class Jogador : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    void RPCPontua()
+    void RPCPontua(int adicional)
     {
         //isto vai executar a partir de uma chamada
         //remota, do Master para o cliente
@@ -77,7 +86,7 @@ public class Jogador : MonoBehaviourPun, IPunObservable
     public void Pontua()
     {
         //isto vai iniciar a chamada remota (Pontua() será invocado pelo Master)
-        photonView.RPC("RPCPontua", RpcTarget.All);
+        photonView.RPC("RPCPontua", RpcTarget.All, 1);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

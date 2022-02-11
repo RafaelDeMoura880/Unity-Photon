@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2395597743682158825}
   - component: {fileID: 2395597743682158824}
   - component: {fileID: 2395597743682158839}
+  - component: {fileID: -7227525896184093711}
   m_Layer: 0
   m_Name: CaixaMadeira
   m_TagString: Caixa
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &-7227525896184093711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2395597743682158834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ce57ea184791a4c82b1904a43a36ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrefabMoeda: {fileID: 6599867542521764983, guid: 3cf7ee45847ab6f4ca7fb341d711c299,
+    type: 3}
