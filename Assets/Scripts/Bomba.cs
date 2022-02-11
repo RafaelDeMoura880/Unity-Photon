@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class Bomba : MonoBehaviour
+public class Bomba : MonoBehaviourPun
 {
     public float Tempo = 3;
     public GameObject ObjetoExplosao;
@@ -27,11 +28,20 @@ public class Bomba : MonoBehaviour
             ObjetoExplosao.SetActive(true);
             //some com a bomba
             RendererBomba.enabled = false;
-            //se auto destruirá 1 segundo depois
-            Destroy(gameObject, 1f);
+
+            //destruição via rede -- apenas se o objeto foi criado por mim
+            if (photonView.IsMine)
+                StartCoroutine(DestroiBomba());
+
             //reseta contagem para não repetir a operação
             explodiu = true;
         }
         contagem += Time.deltaTime;
+    }
+
+    IEnumerator DestroiBomba()
+    {
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
