@@ -7,6 +7,7 @@ TagManager:
   - Caixa
   - Moeda
   - SpeedUp
+  - Explosao
   layers:
   - Default
   - TransparentFX
