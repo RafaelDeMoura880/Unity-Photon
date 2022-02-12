@@ -6,6 +6,7 @@ using UnityEngine;
 public class CriaBomba : MonoBehaviourPun
 {
     public GameObject PrefabBomba;
+    bool hasLaunchedBomb = false;
 
     private void Start()
     {
@@ -17,9 +18,11 @@ public class CriaBomba : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && hasLaunchedBomb == false)
         {
             GeraBomba();
+            hasLaunchedBomb = true;
+            StartCoroutine(TimerBomba());
         }
     }
 
@@ -35,5 +38,11 @@ public class CriaBomba : MonoBehaviourPun
         //após criar, vamos lançar a bomba ao ar
         Vector3 direcao = transform.forward;
         novaBomba.GetComponent<Rigidbody>().AddForce(direcao * 10, ForceMode.Impulse);
+    }
+
+    IEnumerator TimerBomba()
+    {
+        yield return new WaitForSeconds(2);
+        hasLaunchedBomb = false;
     }
 }
