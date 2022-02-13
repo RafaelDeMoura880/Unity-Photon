@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 
 public class Jogador : MonoBehaviourPun, IPunObservable
@@ -30,7 +31,11 @@ public class Jogador : MonoBehaviourPun, IPunObservable
         playerColor = this.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
 
         if (photonView.IsMine)
+        {
             playerColor.material.color = Color.blue;
+            GetComponent<CameraWork>().OnStartFollowing();
+        }
+            
     }
 
     private void OnTriggerEnter(Collider other)
