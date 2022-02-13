@@ -10,7 +10,7 @@ public class SpeedUp : MonoBehaviourPun
         if(PhotonNetwork.IsMasterClient && other.CompareTag("Player"))
         {
             Jogador jog = other.GetComponent<Jogador>();
-            jog.SpeedUp();
+            //jog.SpeedUp();
             PhotonNetwork.Destroy(gameObject);
         }
     }

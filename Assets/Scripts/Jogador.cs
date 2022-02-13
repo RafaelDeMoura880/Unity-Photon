@@ -77,16 +77,16 @@ public class Jogador : MonoBehaviourPun, IPunObservable
         Pontuacao++;
     }
 
-    [PunRPC]
-    void RPCSpeedUp()
-    {
-        Velocidade += 2;
-    }
+    //[PunRPC]
+    //void RPCSpeedUp()
+    //{
+    //    Velocidade += 2;
+    //}
 
-    public void SpeedUp()
-    {
-        photonView.RPC("RPCSpeedUp", RpcTarget.All);
-    }
+    //public void SpeedUp()
+    //{
+    //    photonView.RPC("RPCSpeedUp", RpcTarget.All);
+    //}
 
     public void Pontua()
     {
@@ -102,14 +102,14 @@ public class Jogador : MonoBehaviourPun, IPunObservable
             //está em ooperação de escrita de dados para a rede?
             //então vamos mandar a informação de Pontuacao nesse fluxo
             stream.SendNext(Pontuacao);
-            stream.SendNext(Velocidade);
+            //stream.SendNext(Velocidade);
         }
         else
         {
             //senão, está em operação de leitura de dados da rede
             //vamos capturar a informação de Pontuacao nesse fluxo
             Pontuacao = (int)stream.ReceiveNext();
-            Velocidade = (int)stream.ReceiveNext();
+            //Velocidade = (int)stream.ReceiveNext();
         }
     }
 }
