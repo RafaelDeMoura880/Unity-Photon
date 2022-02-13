@@ -6,11 +6,13 @@ using UnityEngine;
 public class CriaBomba : MonoBehaviourPun
 {
     public GameObject PrefabBomba;
+
+    Animator anim;
     bool hasLaunchedBomb = false;
 
     private void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -20,6 +22,7 @@ public class CriaBomba : MonoBehaviourPun
 
         if (Input.GetButtonDown("Fire1") && hasLaunchedBomb == false)
         {
+            anim.SetTrigger("atacando");
             GeraBomba();
             hasLaunchedBomb = true;
             StartCoroutine(TimerBomba());
