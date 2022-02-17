@@ -10,7 +10,6 @@ public class Jogador : MonoBehaviourPun, IPunObservable
     public float VelocidadeGiro = 3;
 
     Rigidbody rb;
-    Animator anim;
     float inputH;
     float inputV;
 
@@ -27,7 +26,6 @@ public class Jogador : MonoBehaviourPun, IPunObservable
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
         playerColor = this.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
 
         if (photonView.IsMine)
@@ -54,9 +52,6 @@ public class Jogador : MonoBehaviourPun, IPunObservable
         
         inputH = Input.GetAxis("Horizontal");
         inputV = Input.GetAxis("Vertical");
-
-        //se há algum input, muda "andando" para verdadeiro; caso contrário, falso
-        anim.SetBool("andando", (inputH != 0 || inputV != 0));
     }
 
     private void FixedUpdate()
