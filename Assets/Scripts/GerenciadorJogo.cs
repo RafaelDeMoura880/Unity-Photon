@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GerenciadorJogo : MonoBehaviourPunCallbacks
 {
     public GameObject PrefabJogador;
+    public Hud HudCena;
     public double TempoMaximo = 45;
 
     bool jogoEmAndamento;
@@ -39,7 +40,35 @@ public class GerenciadorJogo : MonoBehaviourPunCallbacks
 
     void DefineGanhador()
     {
-        
+        //caso a entrada TempoInicio não tenha sido ainda configurada, encerrar o método
+        if (PhotonNetwork.CurrentRoom.CustomProperties["TempoInicio"] == null)
+            return;
+
+        double tempoInicio = (double)PhotonNetwork.CurrentRoom.CustomProperties["TempoInicio"];
+
+        if(PhotonNetwork.Time - tempoInicio >= TempoMaximo)
+        {
+            //tempo esgotado
+            //buscar por todos os jogadores e encontrar o que tem maior pontuação
+            Jogador[] jogadores = GameObject.FindObjectsOfType<Jogador>();
+            Jogador maiorPontuador = jogadores[0];
+            for (int i = 1; i < jogadores.Length; i++)
+            {
+                if (jogadores[i].Pontuacao > maiorPontuador.Pontuacao)
+                    maiorPontuador = jogadores[i];
+            }
+            foreach (var jogador in jogadores)
+                photonView.RPC("MostraResultado", jogador.photonView.Owner, 
+                    jogador == maiorPontuador);
+
+            jogoEmAndamento = false;
+        }
+    }
+
+    [PunRPC]
+    void MostraResultado(bool vitorioso)
+    {
+        HudCena.MostraResultado(vitorioso);
     }
 
     public void SairDaSala()

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Hud : MonoBehaviour
 {
     public Text TxtPontuacoes;
+    public Text TxtResultado;
 
     private void Update()
     {
@@ -18,6 +19,12 @@ public class Hud : MonoBehaviour
             //ToString("0") é usado para desprezar casas decimais
             TxtPontuacoes.text = tempo.ToString("0");
         }
+    }
+
+    public void MostraResultado(bool vitoria)
+    {
+        TxtResultado.text = vitoria ? "Vencedor!" : "Perdedor...";
+        TxtResultado.gameObject.SetActive(true);
     }
 
     //Previous Update counting player score
