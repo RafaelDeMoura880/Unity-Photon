@@ -62,8 +62,8 @@ public class Conexao : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Juntou-se a uma sala de jogo!");
-        //aqui vai chamar a cena de jogo
-        PhotonNetwork.LoadLevel("cenario-jogo1");
+        //PhotonNetwork.LoadLevel("cenario-jogo1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("sala-espera");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

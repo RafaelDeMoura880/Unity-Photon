@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/cenario-jogo1.unity
     guid: 5d2cc780cc9d67d4a9f8d0623697dd0e
+  - enabled: 1
+    path: Assets/Scenes/sala-espera.unity
+    guid: f3c0df56a77598a43ab7c2ede38639fe
   m_configObjects: {}
